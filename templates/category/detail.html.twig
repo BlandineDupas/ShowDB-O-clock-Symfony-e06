@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CategoryController!{% endblock %}
+
+{% block body %}
+    <h2>{{ category.label }}</h2>
+    {% if category.shows is not empty %}
+        <ul>
+            {% for show in category.shows %}
+                <li><a href="{{ path('show_detail', {'id': show.id }) }}">{{ show.title }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Vous n'avez pas encore de série dans cette catégorie</p>
+    {% endif %}
+{% endblock %}

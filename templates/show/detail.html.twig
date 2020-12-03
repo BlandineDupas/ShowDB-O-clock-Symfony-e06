@@ -1,15 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ShowController!{% endblock %}
+{% block title %}ShowDB - {{ show.title }}{% endblock %}
 
 {% block body %}
 
     <h1>{{show.title}}</h1>
-    {% dump(show) %}
+    <p><strong>Catégories :</strong> 
+        {% for category in show.categories %}
+            <a href="{{ path('category_detail', {'label': category.label}) }}"> - {{ category.label }} - </a>
+        {% endfor %}
+    <p>{{ show.synopsis }}</p>
     <h2>Saisons</h2>
-    {% for season in show.seasons %}
-        <li>{{ season.number }} : {{ season.year }}</li>
-    {% endfor %}
+    <ul>
+        {% for season in show.seasons %}
+            <li>Saison {{ season.number }} (sortie en {{ season.year }})</li>
+            {% if season.episodes is not empty %}
+                <details>
+                    <summary>Voir les épisodes</summary>
+                    <ul>
+                        {% for episode in season.episodes %}
+                            <li>Episode {{ episode.number }} : {{ episode.title }}</li>
+                        {% endfor %}
+                    </ul>
+                </details>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <h2>Personnages</h2>
+        <ul>
+            {% for character in show.characters %}
+                <li>{{ character.name }}</li>
+            {% endfor %}
+        </ul>
+
+
     {% dump(show) %}
 
 {% endblock %}

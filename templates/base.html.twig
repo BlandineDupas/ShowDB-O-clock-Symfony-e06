@@ -6,6 +6,14 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        <nav>
+            <ul>
+                <a href="{{ path('homepage') }}" ><li>Accueil</li></a>
+                <a href="{{ path('show_list') }}" ><li>Toutes mes séries</li></a>
+                <a href="{{ path('categories_list') }}" ><li>Catégories</li></a>
+            </ul>
+        </nav>
+
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
