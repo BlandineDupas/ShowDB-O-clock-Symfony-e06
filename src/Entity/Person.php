@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PersonRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,22 @@ class Person
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $country;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Show::class, mappedBy="person", orphanRemoval=true)
+     */
+    private $shows;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Character::class, inversedBy="people")
+     */
+    private $characters;
+
+    public function __construct()
+    {
+        $this->shows = new ArrayCollection();
+        $this->characters = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +121,60 @@ class Person
     public function setCountry(string $country): self
     {
         $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Show[]
+     */
+    public function getShows(): Collection
+    {
+        return $this->shows;
+    }
+
+    public function addShow(Show $show): self
+    {
+        if (!$this->shows->contains($show)) {
+            $this->shows[] = $show;
+            $show->setPerson($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShow(Show $show): self
+    {
+        if ($this->shows->removeElement($show)) {
+            // set the owning side to null (unless already changed)
+            if ($show->getPerson() === $this) {
+                $show->setPerson(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Character[]
+     */
+    public function getCharacters(): Collection
+    {
+        return $this->characters;
+    }
+
+    public function addCharacter(Character $character): self
+    {
+        if (!$this->characters->contains($character)) {
+            $this->characters[] = $character;
+        }
+
+        return $this;
+    }
+
+    public function removeCharacter(Character $character): self
+    {
+        $this->characters->removeElement($character);
 
         return $this;
     }

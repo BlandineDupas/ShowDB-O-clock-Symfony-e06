@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Show;
+use App\Repository\ShowRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,22 +11,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class ShowController extends AbstractController
 {
     /**
-     * @Route("/", name="homepage")
+     * Le paramConverter de Doctrine va utiliser le paramètre d'url pour trouver l'entité demandée
+     * Si on typehint avec Show, alors doctrine va utiliser le repository correspondant, puis utiliser la méthode findOneBy(nom du param d'url => valeur)
+     * Permet d'éviter tout ce qui est commenté dans la méthode.
+     * 
+     * @Route("/show/{id}", name="show_detail", methods={"GET"}, requirements={ "id" = "\d+"})
      */
-    public function index(): Response
+    public function showDetail(Show $show): Response
     {
-        $show = new Show();
-        $show->setTitle('Mr. Robot');
+        // $showRepository = $this->getDoctrine()->getRepository(Show::class);
+        // $show = $showRepository->find($id);
 
-        // ask doctrine the entity manager
-        $manager = $this->getDoctrine()->getManager();
-        // entity manager take charge of my object
-        $manager->persist($show);
-        // manager save all changes to my database
-        $manager->flush();
+        // if (empty($show)) {
+        //     throw $this->createNotFoundException('La série ' . $id .' n\'existe pas !');
+        // }
 
-        return $this->render('show/index.html.twig', [
-            'show' => $show,
-        ]);
+        return $this->render('show/detail.html.twig',[ 'show' => $show ]);
     }
 }

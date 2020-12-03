@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ShowController!{% endblock %}
+
+{% block body %}
+
+    <h1>{{show.title}}</h1>
+    {% dump(show) %}
+    <h2>Saisons</h2>
+    {% for season in show.seasons %}
+        <li>{{ season.number }} : {{ season.year }}</li>
+    {% endfor %}
+    {% dump(show) %}
+
+{% endblock %}
