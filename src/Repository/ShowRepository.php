@@ -19,6 +19,33 @@ class ShowRepository extends ServiceEntityRepository
         parent::__construct($registry, Show::class);
     }
 
+    /**
+     * @param int $id
+     * @return Show[] Returns an array of Show objects 
+     */
+    public function findWithCollection($id)
+    {
+        $queryBuilder = $this->createQueryBuilder('show');
+
+        $queryBuilder->where(
+            $queryBuilder->expr()->eq('show.id', $id)
+        );
+
+        // Joins allows to reduce number of queries to DB
+        $queryBuilder->leftJoin('show.categories', 'category');
+        $queryBuilder->addSelect('category');
+
+        $queryBuilder->leftJoin('show.seasons', 'season');
+        $queryBuilder->addSelect('season');
+
+        $queryBuilder->leftJoin('season.episodes', 'episode');
+        $queryBuilder->addSelect('episode');
+
+        $queryBuilder->leftJoin('show.characters', 'character');
+        $queryBuilder->addSelect('character');
+
+        return $queryBuilder->getQuery()->getResult();
+    }
     // /**
     //  * @return Show[] Returns an array of Show objects
     //  */

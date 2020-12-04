@@ -18,15 +18,16 @@ class ShowController extends AbstractController
      * 
      * @Route("/show/{id}", name="show_detail", methods={"GET"}, requirements={ "id" = "\d+"})
      */
-    public function showDetail(Show $show): Response
+    public function showDetail(int $id): Response
     {
-        // $showRepository = $this->getDoctrine()->getRepository(Show::class);
-        // $show = $showRepository->find($id);
+        /** @var ShowRepository $showRepository */
+        $showRepository = $this->getDoctrine()->getRepository(Show::class);
+        $show = $showRepository->findWithCollection($id)[0];
 
         // if (empty($show)) {
         //     throw $this->createNotFoundException('La série ' . $id .' n\'existe pas !');
         // }
-
+            dump($show);
         return $this->render('show/detail.html.twig',[ 'show' => $show ]);
     }
 
