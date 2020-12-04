@@ -5,16 +5,18 @@
 {% block body %}
 
     <h1>{{show.title}}</h1>
-    <p><strong>Catégories :</strong> 
-        {% for category in show.categories %}
-            <a href="{{ path('category_detail', {'label': category.label}) }}"> - {{ category.label }} - </a>
-        {% endfor %}
+        <ul class="list-inline">
+            {% for category in show.categories %}
+                <a href="{{ path('category_detail', {'label': category.label}) }}"><li class="list-inline-item">{{ category.label }}</li></a>
+            {% endfor %}
+        </ul>
     <p>{{ show.synopsis }}</p>
     <h2>Saisons</h2>
-    <ul>
+    <ul class="list-group">
         {% for season in show.seasons %}
-            <li>Saison {{ season.number }} (sortie en {{ season.year }})</li>
-            {% if season.episodes is not empty %}
+            <li class="list-group-item list-group-item-action">
+                Saison {{ season.number }} (sortie en {{ season.year }})
+                {% if season.episodes is not empty %}
                 <details>
                     <summary>Voir les épisodes</summary>
                     <ul>
@@ -24,12 +26,14 @@
                     </ul>
                 </details>
             {% endif %}
+            </li>
+            
         {% endfor %}
     </ul>
     <h2>Personnages</h2>
-        <ul>
+        <ul class="list-group">
             {% for character in show.characters %}
-                <li>{{ character.name }}</li>
+                <li class="list-group-item list-group-item-action">{{ character.name }}</li>
             {% endfor %}
         </ul>
 

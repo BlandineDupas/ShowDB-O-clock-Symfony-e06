@@ -5,11 +5,13 @@
 {% block body %}
     <h2>Vos séries :</h2>
         {% if shows is not empty %}
-            {% for show in shows %}
-                <a href="{{ path('show_detail', { 'id': show.id }) }}" ><li>{{ show.title }}</li></a>
-            {% endfor %}
+            <div class="list-group">
+                {% for show in shows %}
+                    <a class="list-group-item list-group-item-action" href="{{ path('show_detail', { 'id': show.id }) }}" >{{ show.title }}</a>
+                {% endfor %}
+            </div>
         {% else %}
         <p>Vous n'avez pas encore enregistré de série...</p>
         {% endif %}
-    <a href="">Ajouter une série :</a>
+    <a href="">Ajouter une série</a>
 {% endblock %}

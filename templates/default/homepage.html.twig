@@ -4,12 +4,18 @@
 
 {% block body %}
 <h1>Bienvenue sur ShowDB !</h1>
-<h3>Le site où vous pouvez enregistrer vos séries préférées...</h3>
+<p><strong>Le site où vous pouvez enregistrer vos séries préférées...</strong></p>
 
 <h2>Vos dernières séries :</h2>
     {% if shows is not empty %}
         {% for show in shows %}
-            <a href="{{ path('show_detail', { 'id': show.id }) }}" ><li>{{ show.title }}</li></a>
+            <div class="card col-sm-4">
+                <div class="card-body">
+                    <div class="bg-info mb-2" style="width: 100%; height: 100px"></div>
+                    <h5 class="card-title">{{ show.title }}</h5>
+                    <a class="card-link" href="{{ path('show_detail', { 'id': show.id }) }}" >Voir le détail</a>
+                </div>
+            </div>
         {% endfor %}
     {% else %}
     <p>Vous n'avez pas encore enregistré de série...</p>
