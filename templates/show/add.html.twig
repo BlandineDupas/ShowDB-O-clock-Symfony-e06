@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ShowDB - Ajouter une série{% endblock %}
+
+{% block body %}
+    <h2>Formulaire</h2>
+    <form class="form-group" action="{{ path('show_add_post') }}" method='POST'>
+        <label for="title">Titre</label>
+        <input class="form-control" type="text" name="title" id="title">
+        <label for="synopsis">Synopsis</label>
+        <textarea class="form-control" name="synopsis" id="synopsis"></textarea>
+        <button class="btn btn-primary" type="submit">Ajouter</button>
+    </form>
+{% endblock %}
